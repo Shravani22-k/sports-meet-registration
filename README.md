@@ -31,3 +31,22 @@ sports-meet-registration/
 ├── success.php
 ├── view_records.php
 └── database.sql
+
+🗄️ Database Setup
+Open MySQL Workbench
+Run:
+CREATE DATABASE sports_meet;
+USE sports_meet;
+Import or run database.sql
+
+▶️ How to Run
+php -S localhost:8000
+
+Open:
+http://localhost:8000/index.html
+
+👀 View Records
+http://localhost:8000/view_records.php
+
+📌 Note
+Update config.php with your own MySQL username and password before running.
