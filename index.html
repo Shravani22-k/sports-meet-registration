@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annual Sports Meet 2026 — Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-night:#0B1120;
+    --bg-panel:#131B2E;
+    --bg-panel-2:#1B2540;
+    --track-orange:#FF6B35;
+    --medal-gold:#FFC93C;
+    --finish-green:#2EE6A6;
+    --text-light:#F5F6FA;
+    --text-muted:#8E97AE;
+    --line:rgba(255,255,255,0.10);
+    --danger:#FF5C72;
+    --radius:14px;
+    --font-display:'Anton', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'Space Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg-night);
+    color:var(--text-light);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+
+  h1,h2,h3{font-family:var(--font-display); font-weight:400; letter-spacing:0.02em; margin:0;}
+
+  ::selection{background:var(--track-orange); color:#0B1120;}
+
+  :focus-visible{outline:2px solid var(--medal-gold); outline-offset:3px; border-radius:4px;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-size:1.25rem; letter-spacing:0.04em;}
+  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--track-orange); box-shadow:0 0 0 4px rgba(255,107,53,0.15);}
+  .topbar nav a{
+    text-decoration:none; color:var(--text-muted); font-size:0.9rem; margin-left:28px; transition:color .2s;
+  }
+  .topbar nav a:hover{color:var(--text-light);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:9vw 6vw 7vw;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(100deg,
+        transparent 0, transparent 78px,
+        rgba(255,255,255,0.035) 78px, rgba(255,255,255,0.035) 80px);
+  }
+  .hero::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0; height:3px;
+    background:repeating-linear-gradient(90deg, var(--medal-gold) 0 22px, transparent 22px 38px);
+    opacity:0.5;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--medal-gold); border:1px solid rgba(255,201,60,0.35); border-radius:999px;
+    padding:6px 14px; margin-bottom:26px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 7.5vw, 5.6rem);
+    line-height:0.98;
+    text-transform:uppercase;
+    max-width:14ch;
+  }
+  .hero h1 span{color:var(--track-orange);}
+  .hero p{
+    color:var(--text-muted); font-size:clamp(1rem,1.6vw,1.15rem);
+    max-width:46ch; margin:22px 0 36px;
+  }
+  .hero-meta{display:flex; flex-wrap:wrap; gap:28px; margin-bottom:40px;}
+  .hero-meta div{font-family:var(--font-mono); font-size:0.82rem; color:var(--text-muted);}
+  .hero-meta strong{display:block; font-family:var(--font-body); font-weight:600; color:var(--text-light); font-size:0.95rem; margin-top:2px;}
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-body); font-weight:600; font-size:0.95rem;
+    padding:14px 26px; border-radius:999px; border:none; cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--track-orange); color:#180A02;}
+  .btn-primary:hover{box-shadow:0 8px 22px rgba(255,107,53,0.35); transform:translateY(-1px);}
+  .btn-ghost{background:transparent; color:var(--text-light); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--text-muted);}
+
+  /* ---------- Register section ---------- */
+  .register{
+    padding:6vw 6vw 9vw;
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:48px;
+    align-items:start;
+  }
+  .section-tag{
+    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--medal-gold); margin-bottom:10px;
+  }
+  .register h2{font-size:clamp(1.8rem,3.2vw,2.6rem); text-transform:uppercase; margin-bottom:30px;}
+
+  /* progress / race track */
+  .track{position:relative; margin:0 0 44px; padding:0 6px;}
+  .track-line{position:relative; height:4px; background:var(--line); border-radius:4px;}
+  .track-fill{
+    position:absolute; top:0; left:0; height:100%; width:0%;
+    background:linear-gradient(90deg, var(--track-orange), var(--medal-gold));
+    border-radius:4px; transition:width .4s ease;
+  }
+  .runner{
+    position:absolute; top:50%; left:0%; transform:translate(-50%,-50%);
+    font-size:1.3rem; transition:left .4s ease;
+  }
+  .checkpoints{display:flex; justify-content:space-between; margin-top:14px;}
+  .checkpoint{font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted); max-width:33%; text-align:left;}
+  .checkpoint b{display:block; font-family:var(--font-body); font-weight:600; font-size:0.85rem; color:var(--text-muted); margin-top:2px;}
+  .checkpoint.active b{color:var(--text-light);}
+  .checkpoint.active{color:var(--track-orange);}
+
+  /* form card */
+  form{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:36px;}
+  .step{display:none;}
+  .step.active{display:block; animation:fadeIn .35s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .field{margin-bottom:20px;}
+  .field.full{grid-column:1/-1;}
+  label{display:block; font-size:0.85rem; color:var(--text-muted); margin-bottom:8px; font-weight:500;}
+  input, select{
+    width:100%; background:var(--bg-panel-2); border:1px solid var(--line); color:var(--text-light);
+    padding:13px 14px; border-radius:10px; font-family:var(--font-body); font-size:0.95rem;
+  }
+  input::placeholder{color:#5C657F;}
+  input:focus, select:focus{border-color:var(--track-orange);}
+  select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%); background-position:calc(100% - 22px) center, calc(100% - 16px) center; background-size:6px 6px,6px 6px; background-repeat:no-repeat;}
+
+  .radio-row{display:flex; gap:14px;}
+  .radio-pill{
+    flex:1; border:1px solid var(--line); border-radius:10px; padding:13px 14px;
+    display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.9rem; background:var(--bg-panel-2);
+    transition:border-color .2s;
+  }
+  .radio-pill input{width:auto; padding:0;}
+  .radio-pill.checked{border-color:var(--track-orange);}
+
+  .hint{font-size:0.78rem; color:var(--text-muted); margin-top:6px;}
+
+  .form-nav{display:flex; justify-content:space-between; margin-top:8px; padding-top:24px; border-top:1px solid var(--line);}
+
+  /* review */
+  .review-list{display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; margin-bottom:28px;}
+  .review-item{border-bottom:1px dashed var(--line); padding-bottom:10px;}
+  .review-item .k{font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted);}
+  .review-item .v{font-weight:600; margin-top:3px;}
+  .bib-banner{
+    background:linear-gradient(120deg, rgba(255,107,53,0.16), rgba(255,201,60,0.10));
+    border:1px solid rgba(255,201,60,0.3); border-radius:12px; padding:18px 20px;
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:28px;
+  }
+  .bib-banner .k{font-family:var(--font-mono); font-size:0.78rem; color:var(--medal-gold); text-transform:uppercase; letter-spacing:0.08em;}
+  .bib-banner .v{font-family:var(--font-mono); font-size:1.5rem; font-weight:700;}
+
+  /* ID card preview */
+  .id-card-wrap{position:sticky; top:24px;}
+  .id-card-wrap .section-tag{margin-bottom:14px;}
+  .id-card{
+    background:linear-gradient(155deg, var(--bg-panel-2), var(--bg-panel));
+    border:1px solid var(--line); border-radius:16px; padding:26px;
+    position:relative; overflow:hidden;
+  }
+  .id-card::before{
+    content:""; position:absolute; top:-40px; right:-40px; width:140px; height:140px;
+    background:radial-gradient(circle, rgba(255,107,53,0.25), transparent 70%);
+  }
+  .id-card .tag{font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.1em; color:var(--text-muted); text-transform:uppercase;}
+  .id-card .name{font-family:var(--font-display); font-size:1.6rem; text-transform:uppercase; margin:6px 0 2px; min-height:1.2em; word-break:break-word;}
+  .id-card .school{color:var(--text-muted); font-size:0.85rem; min-height:1.2em;}
+  .id-card hr{border:none; border-top:1px dashed var(--line); margin:20px 0;}
+  .id-card .row{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+  .id-card .row .k{font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em;}
+  .id-card .row .v{font-weight:600; font-size:0.92rem; display:flex; align-items:center; gap:6px;}
+  .id-card .bib{font-family:var(--font-mono); font-size:1.3rem; font-weight:700; color:var(--medal-gold); letter-spacing:0.02em;}
+  .sport-icon{font-size:1.3rem;}
+
+  footer{padding:30px 6vw; border-top:1px solid var(--line); color:var(--text-muted); font-size:0.82rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  @media (max-width:900px){
+    .register{grid-template-columns:1fr;}
+    .id-card-wrap{position:static;}
+    .field-grid{grid-template-columns:1fr;}
+    .review-list{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span> SPORTS MEET 2026</div>
+    <nav>
+      <a href="#register">Register</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">🏆 Registrations Open</span>
+    <h1>Run. Jump.<br>Compete.<br><span>Register now.</span></h1>
+    <p>The Annual Sports Meet brings every track, field and team event under one banner. Pick your sport, lock in your spot, and get your official participant bib.</p>
+    <div class="hero-meta">
+      <div>Dates<strong>14–16 August 2026</strong></div>
+      <div>Venue<strong>City Sports Complex</strong></div>
+      <div>Entries close<strong>5 August 2026</strong></div>
+    </div>
+    <a href="#register" class="btn btn-primary">Start registration →</a>
+  </section>
+
+  <section class="register" id="register">
+    <div>
+      <div class="section-tag">Step 1 of 3</div>
+      <h2>Claim your bib</h2>
+
+      <div class="track">
+        <div class="track-line">
+          <div class="track-fill" id="trackFill"></div>
+          <div class="runner" id="runner">🏃</div>
+        </div>
+        <div class="checkpoints">
+          <div class="checkpoint active" id="cp1">Lap 1<b>Personal Details</b></div>
+          <div class="checkpoint" id="cp2">Lap 2<b>Sport &amp; Team</b></div>
+          <div class="checkpoint" id="cp3">Lap 3<b>Review &amp; Submit</b></div>
+        </div>
+      </div>
+
+      <form id="regForm" action="register.php" method="POST" novalidate>
+
+        <!-- STEP 1 -->
+        <div class="step active" data-step="1">
+          <div class="field-grid">
+            <div class="field full">
+              <label for="fullName">Full name</label>
+              <input id="fullName" name="fullName" type="text" placeholder="e.g. Aarav Sharma" required>
+            </div>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input id="phone" name="phone" type="tel" pattern="[0-9]{10}" placeholder="10-digit number" required>
+            </div>
+            <div class="field">
+              <label for="age">Age</label>
+              <input id="age" name="age" type="number" min="5" max="100" placeholder="e.g. 19" required>
+            </div>
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select one</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ecName">Emergency contact name</label>
+              <input id="ecName" name="ecName" type="text" placeholder="Parent / guardian name" required>
+            </div>
+            <div class="field">
+              <label for="ecPhone">Emergency contact phone</label>
+              <input id="ecPhone" name="ecPhone" type="tel" pattern="[0-9]{10}" placeholder="10-digit number" required>
+            </div>
+          </div>
+          <div class="form-nav">
+            <span></span>
+            <button type="button" class="btn btn-primary" data-action="next">Next: Sport details →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step" data-step="2">
+          <div class="field-grid">
+            <div class="field full">
+              <label for="institution">College / school / institution</label>
+              <input id="institution" name="institution" type="text" placeholder="e.g. Pimpri Chinchwad College" required>
+            </div>
+            <div class="field">
+              <label for="sport">Sport category</label>
+              <select id="sport" name="sport" required>
+                <option value="" disabled selected>Select a sport</option>
+                <option value="🏃 Athletics">Athletics (Track &amp; Field)</option>
+                <option value="🏸 Badminton">Badminton</option>
+                <option value="🏏 Cricket">Cricket</option>
+                <option value="⚽ Football">Football</option>
+                <option value="🏀 Basketball">Basketball</option>
+                <option value="🤼 Kabaddi">Kabaddi</option>
+                <option value="🏓 Table Tennis">Table Tennis</option>
+                <option value="♟️ Chess">Chess</option>
+                <option value="🏐 Volleyball">Volleyball</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="tshirt">T-shirt size</label>
+              <select id="tshirt" name="tshirt" required>
+                <option value="" disabled selected>Select size</option>
+                <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label>Participation type</label>
+              <div class="radio-row">
+                <label class="radio-pill" id="pillIndividual">
+                  <input type="radio" name="participation" value="Individual" required> Individual
+                </label>
+                <label class="radio-pill" id="pillTeam">
+                  <input type="radio" name="participation" value="Team"> Team
+                </label>
+              </div>
+            </div>
+            <div class="field full" id="teamNameField" style="display:none;">
+              <label for="teamName">Team name</label>
+              <input id="teamName" name="teamName" type="text" placeholder="e.g. Thunder Strikers">
+            </div>
+          </div>
+          <div class="form-nav">
+            <button type="button" class="btn btn-ghost" data-action="back">← Back</button>
+            <button type="button" class="btn btn-primary" data-action="next">Next: Review →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step" data-step="3">
+          <div class="bib-banner">
+            <div>
+              <div class="k">Your participant bib number</div>
+              <div class="v" id="bibDisplay">—</div>
+            </div>
+            <span class="sport-icon">🎟️</span>
+          </div>
+          <div class="review-list" id="reviewList"></div>
+          <div class="hint">Check your details carefully. You'll receive this bib number and a confirmation pass on the next page.</div>
+          <div class="form-nav">
+            <button type="button" class="btn btn-ghost" data-action="back">← Back</button>
+            <button type="submit" class="btn btn-primary">Confirm &amp; register 🏁</button>
+          </div>
+        </div>
+
+        <input type="hidden" id="bibNumber" name="bibNumber">
+      </form>
+    </div>
+
+    <aside class="id-card-wrap">
+      <div class="section-tag">Live preview</div>
+      <div class="id-card">
+        <div class="tag">Sports Meet 2026 · Participant</div>
+        <div class="name" id="pvName">Your Name</div>
+        <div class="school" id="pvInstitution">Your institution</div>
+        <hr>
+        <div class="row">
+          <span class="k">Sport</span>
+          <span class="v"><span class="sport-icon" id="pvIcon">🏅</span> <span id="pvSport">—</span></span>
+        </div>
+        <div class="row">
+          <span class="k">Type</span>
+          <span class="v" id="pvType">—</span>
+        </div>
+        <div class="row">
+          <span class="k">Bib no.</span>
+          <span class="v bib" id="pvBib">—</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer>
+    <span>© 2026 Annual Sports Meet Committee</span>
+    <span>Need help? sportsmeet2026@example.com</span>
+  </footer>
+
+<script>
+  const steps = Array.from(document.querySelectorAll('.step'));
+  const checkpoints = [document.getElementById('cp1'), document.getElementById('cp2'), document.getElementById('cp3')];
+  const trackFill = document.getElementById('trackFill');
+  const runner = document.getElementById('runner');
+  const sectionTag = document.querySelector('.register .section-tag');
+  let currentStep = 1;
+  const totalSteps = steps.length;
+
+  function goToStep(n){
+    steps.forEach(s => s.classList.toggle('active', Number(s.dataset.step) === n));
+    checkpoints.forEach((cp, i) => cp.classList.toggle('active', i === n - 1));
+    const pct = ((n - 1) / (totalSteps - 1)) * 100;
+    trackFill.style.width = pct + '%';
+    runner.style.left = pct + '%';
+    sectionTag.textContent = 'Step ' + n + ' of ' + totalSteps;
+    currentStep = n;
+    if (n === totalSteps) buildReview();
+  }
+
+  function validateStep(n){
+    const stepEl = document.querySelector('.step[data-step="' + n + '"]');
+    const inputs = stepEl.querySelectorAll('input, select');
+    for (const el of inputs){
+      if (el.type === 'radio'){
+        const group = stepEl.querySelectorAll('input[name="' + el.name + '"]');
+        const checked = Array.from(group).some(r => r.checked);
+        if (el.required && !checked){ alert('Please choose a participation type.'); return false; }
+        continue;
+      }
+      if (!el.checkValidity()){
+        el.reportValidity();
+        return false;
+      }
+    }
+    // team name required if Team selected
+    const participation = document.querySelector('input[name="participation"]:checked');
+    if (n === 2 && participation && participation.value === 'Team'){
+      const teamName = document.getElementById('teamName');
+      if (!teamName.value.trim()){
+        teamName.focus();
+        alert('Please enter your team name.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  document.querySelectorAll('[data-action="next"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!validateStep(currentStep)) return;
+      goToStep(Math.min(currentStep + 1, totalSteps));
+    });
+  });
+  document.querySelectorAll('[data-action="back"]').forEach(btn => {
+    btn.addEventListener('click', () => goToStep(Math.max(currentStep - 1, 1)));
+  });
+
+  // Team name toggle
+  const pillIndividual = document.getElementById('pillIndividual');
+  const pillTeam = document.getElementById('pillTeam');
+  const teamNameField = document.getElementById('teamNameField');
+  [pillIndividual, pillTeam].forEach(pill => {
+    pill.addEventListener('click', () => {
+      pillIndividual.classList.toggle('checked', pill === pillIndividual);
+      pillTeam.classList.toggle('checked', pill === pillTeam);
+      teamNameField.style.display = pill === pillTeam ? 'block' : 'none';
+      updatePreview();
+    });
+  });
+
+  // Live preview
+  const pvName = document.getElementById('pvName');
+  const pvInstitution = document.getElementById('pvInstitution');
+  const pvIcon = document.getElementById('pvIcon');
+  const pvSport = document.getElementById('pvSport');
+  const pvType = document.getElementById('pvType');
+  const pvBib = document.getElementById('pvBib');
+
+  function updatePreview(){
+    const name = document.getElementById('fullName').value.trim();
+    const institution = document.getElementById('institution').value.trim();
+    const sportVal = document.getElementById('sport').value;
+    const participation = document.querySelector('input[name="participation"]:checked');
+
+    pvName.textContent = name || 'Your Name';
+    pvInstitution.textContent = institution || 'Your institution';
+    if (sportVal){
+      const [icon, ...rest] = sportVal.split(' ');
+      pvIcon.textContent = icon;
+      pvSport.textContent = rest.join(' ');
+    } else {
+      pvIcon.textContent = '🏅';
+      pvSport.textContent = '—';
+    }
+    pvType.textContent = participation ? participation.value : '—';
+    pvBib.textContent = document.getElementById('bibNumber').value || '—';
+  }
+
+  ['fullName','institution'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updatePreview);
+  });
+  document.getElementById('sport').addEventListener('change', updatePreview);
+
+  // Bib generation
+  function generateBib(){
+    const existing = document.getElementById('bibNumber').value;
+    if (existing) return existing;
+    const num = Math.floor(1000 + Math.random() * 8999);
+    const bib = 'SM26-' + num;
+    document.getElementById('bibNumber').value = bib;
+    return bib;
+  }
+
+  function buildReview(){
+    const bib = generateBib();
+    document.getElementById('bibDisplay').textContent = bib;
+    updatePreview();
+
+    const data = {
+      'Full name': document.getElementById('fullName').value,
+      'Email': document.getElementById('email').value,
+      'Phone': document.getElementById('phone').value,
+      'Age': document.getElementById('age').value,
+      'Gender': document.getElementById('gender').value,
+      'Institution': document.getElementById('institution').value,
+      'Sport': document.getElementById('sport').value.replace(/^\S+\s/, ''),
+      'Participation': (document.querySelector('input[name="participation"]:checked') || {}).value || '',
+      'T-shirt size': document.getElementById('tshirt').value
+    };
+    const teamName = document.getElementById('teamName').value;
+    if (data['Participation'] === 'Team' && teamName) data['Team name'] = teamName;
+
+    const list = document.getElementById('reviewList');
+    list.innerHTML = '';
+    Object.entries(data).forEach(([k, v]) => {
+      if (!v) return;
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      item.innerHTML = '<div class="k">' + k + '</div><div class="v">' + v + '</div>';
+      list.appendChild(item);
+    });
+  }
+
+  // Submit -> register.php (saves to MySQL, then redirects to success.php)
+  document.getElementById('regForm').addEventListener('submit', function(e){
+    if (!validateStep(currentStep)){
+      e.preventDefault();
+      return;
+    }
+    generateBib(); // fills hidden bibNumber field (server generates the official one)
+    // No preventDefault here — the form submits normally via POST to register.php
+  });
+
+  goToStep(1);
+</script>
+</body>
+</html>
