@@ -3,123 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Annual Sports Meet 2026 — Registration</title>
+<title>Register — Annual Sports Meet 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 <style>
-  :root{
-    --bg-night:#0B1120;
-    --bg-panel:#131B2E;
-    --bg-panel-2:#1B2540;
-    --track-orange:#FF6B35;
-    --medal-gold:#FFC93C;
-    --finish-green:#2EE6A6;
-    --text-light:#F5F6FA;
-    --text-muted:#8E97AE;
-    --line:rgba(255,255,255,0.10);
-    --danger:#FF5C72;
-    --radius:14px;
-    --font-display:'Anton', sans-serif;
-    --font-body:'Inter', sans-serif;
-    --font-mono:'Space Mono', monospace;
-  }
-
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--bg-night);
-    color:var(--text-light);
-    font-family:var(--font-body);
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
-  img,svg{display:block;max-width:100%;}
-  a{color:inherit;}
-
-  h1,h2,h3{font-family:var(--font-display); font-weight:400; letter-spacing:0.02em; margin:0;}
-
-  ::selection{background:var(--track-orange); color:#0B1120;}
-
-  :focus-visible{outline:2px solid var(--medal-gold); outline-offset:3px; border-radius:4px;}
-
-  /* ---------- Top bar ---------- */
-  .topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px 6vw;
-    border-bottom:1px solid var(--line);
-  }
-  .brand{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-size:1.25rem; letter-spacing:0.04em;}
-  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--track-orange); box-shadow:0 0 0 4px rgba(255,107,53,0.15);}
-  .topbar nav a{
-    text-decoration:none; color:var(--text-muted); font-size:0.9rem; margin-left:28px; transition:color .2s;
-  }
-  .topbar nav a:hover{color:var(--text-light);}
-
-  /* ---------- Hero ---------- */
-  .hero{
-    position:relative;
-    padding:9vw 6vw 7vw;
-    overflow:hidden;
-    background:
-      repeating-linear-gradient(100deg,
-        transparent 0, transparent 78px,
-        rgba(255,255,255,0.035) 78px, rgba(255,255,255,0.035) 80px);
-  }
-  .hero::after{
-    content:"";
-    position:absolute; left:0; right:0; bottom:0; height:3px;
-    background:repeating-linear-gradient(90deg, var(--medal-gold) 0 22px, transparent 22px 38px);
-    opacity:0.5;
-  }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--medal-gold); border:1px solid rgba(255,201,60,0.35); border-radius:999px;
-    padding:6px 14px; margin-bottom:26px;
-  }
-  .hero h1{
-    font-size:clamp(2.6rem, 7.5vw, 5.6rem);
-    line-height:0.98;
-    text-transform:uppercase;
-    max-width:14ch;
-  }
-  .hero h1 span{color:var(--track-orange);}
-  .hero p{
-    color:var(--text-muted); font-size:clamp(1rem,1.6vw,1.15rem);
-    max-width:46ch; margin:22px 0 36px;
-  }
-  .hero-meta{display:flex; flex-wrap:wrap; gap:28px; margin-bottom:40px;}
-  .hero-meta div{font-family:var(--font-mono); font-size:0.82rem; color:var(--text-muted);}
-  .hero-meta strong{display:block; font-family:var(--font-body); font-weight:600; color:var(--text-light); font-size:0.95rem; margin-top:2px;}
-
-  .btn{
-    display:inline-flex; align-items:center; gap:10px;
-    font-family:var(--font-body); font-weight:600; font-size:0.95rem;
-    padding:14px 26px; border-radius:999px; border:none; cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease;
-  }
-  .btn:active{transform:translateY(1px);}
-  .btn-primary{background:var(--track-orange); color:#180A02;}
-  .btn-primary:hover{box-shadow:0 8px 22px rgba(255,107,53,0.35); transform:translateY(-1px);}
-  .btn-ghost{background:transparent; color:var(--text-light); border:1px solid var(--line);}
-  .btn-ghost:hover{border-color:var(--text-muted);}
-
-  /* ---------- Register section ---------- */
-  .register{
-    padding:6vw 6vw 9vw;
+  /* Page-specific styles for the multi-step registration flow */
+  .register-layout{
+    padding:5vw 6vw 8vw;
     display:grid;
     grid-template-columns:1fr 360px;
     gap:48px;
     align-items:start;
   }
-  .section-tag{
-    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--medal-gold); margin-bottom:10px;
-  }
-  .register h2{font-size:clamp(1.8rem,3.2vw,2.6rem); text-transform:uppercase; margin-bottom:30px;}
-
-  /* progress / race track */
   .track{position:relative; margin:0 0 44px; padding:0 6px;}
   .track-line{position:relative; height:4px; background:var(--line); border-radius:4px;}
   .track-fill{
@@ -137,23 +34,9 @@
   .checkpoint.active b{color:var(--text-light);}
   .checkpoint.active{color:var(--track-orange);}
 
-  /* form card */
-  form{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:36px;}
   .step{display:none;}
   .step.active{display:block; animation:fadeIn .35s ease;}
   @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
-
-  .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
-  .field{margin-bottom:20px;}
-  .field.full{grid-column:1/-1;}
-  label{display:block; font-size:0.85rem; color:var(--text-muted); margin-bottom:8px; font-weight:500;}
-  input, select{
-    width:100%; background:var(--bg-panel-2); border:1px solid var(--line); color:var(--text-light);
-    padding:13px 14px; border-radius:10px; font-family:var(--font-body); font-size:0.95rem;
-  }
-  input::placeholder{color:#5C657F;}
-  input:focus, select:focus{border-color:var(--track-orange);}
-  select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%); background-position:calc(100% - 22px) center, calc(100% - 16px) center; background-size:6px 6px,6px 6px; background-repeat:no-repeat;}
 
   .radio-row{display:flex; gap:14px;}
   .radio-pill{
@@ -164,11 +47,6 @@
   .radio-pill input{width:auto; padding:0;}
   .radio-pill.checked{border-color:var(--track-orange);}
 
-  .hint{font-size:0.78rem; color:var(--text-muted); margin-top:6px;}
-
-  .form-nav{display:flex; justify-content:space-between; margin-top:8px; padding-top:24px; border-top:1px solid var(--line);}
-
-  /* review */
   .review-list{display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; margin-bottom:28px;}
   .review-item{border-bottom:1px dashed var(--line); padding-bottom:10px;}
   .review-item .k{font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted);}
@@ -181,7 +59,6 @@
   .bib-banner .k{font-family:var(--font-mono); font-size:0.78rem; color:var(--medal-gold); text-transform:uppercase; letter-spacing:0.08em;}
   .bib-banner .v{font-family:var(--font-mono); font-size:1.5rem; font-weight:700;}
 
-  /* ID card preview */
   .id-card-wrap{position:sticky; top:24px;}
   .id-card-wrap .section-tag{margin-bottom:14px;}
   .id-card{
@@ -203,45 +80,31 @@
   .id-card .bib{font-family:var(--font-mono); font-size:1.3rem; font-weight:700; color:var(--medal-gold); letter-spacing:0.02em;}
   .sport-icon{font-size:1.3rem;}
 
-  footer{padding:30px 6vw; border-top:1px solid var(--line); color:var(--text-muted); font-size:0.82rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
-
   @media (max-width:900px){
-    .register{grid-template-columns:1fr;}
+    .register-layout{grid-template-columns:1fr;}
     .id-card-wrap{position:static;}
-    .field-grid{grid-template-columns:1fr;}
     .review-list{grid-template-columns:1fr;}
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none !important; transition:none !important;}
   }
 </style>
 </head>
 <body>
 
   <header class="topbar">
-    <div class="brand"><span class="dot"></span> SPORTS MEET 2026</div>
+    <a href="index.html" class="brand"><span class="dot"></span> SPORTS MEET 2026</a>
     <nav>
-      <a href="#register">Register</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="register.html" class="active">Register</a>
+      <a href="contact.php">Contact</a>
     </nav>
   </header>
 
-  <section class="hero">
-    <span class="eyebrow">🏆 Registrations Open</span>
-    <h1>Run. Jump.<br>Compete.<br><span>Register now.</span></h1>
-    <p>The Annual Sports Meet brings every track, field and team event under one banner. Pick your sport, lock in your spot, and get your official participant bib.</p>
-    <div class="hero-meta">
-      <div>Dates<strong>14–16 August 2026</strong></div>
-      <div>Venue<strong>City Sports Complex</strong></div>
-      <div>Entries close<strong>5 August 2026</strong></div>
-    </div>
-    <a href="#register" class="btn btn-primary">Start registration →</a>
-  </section>
-
-  <section class="register" id="register">
+  <main class="register-layout">
     <div>
-      <div class="section-tag">Step 1 of 3</div>
-      <h2>Claim your bib</h2>
+      <div class="section-tag" id="stepTag">Step 1 of 3</div>
+      <h2 class="section-title">Claim your bib</h2>
 
       <div class="track">
         <div class="track-line">
@@ -255,7 +118,7 @@
         </div>
       </div>
 
-      <form id="regForm" action="register.php" method="POST" novalidate>
+      <form id="regForm" class="panel" action="register.php" method="POST" novalidate>
 
         <!-- STEP 1 -->
         <div class="step active" data-step="1">
@@ -393,7 +256,7 @@
         </div>
       </div>
     </aside>
-  </section>
+  </main>
 
   <footer>
     <span>© 2026 Annual Sports Meet Committee</span>
@@ -405,7 +268,7 @@
   const checkpoints = [document.getElementById('cp1'), document.getElementById('cp2'), document.getElementById('cp3')];
   const trackFill = document.getElementById('trackFill');
   const runner = document.getElementById('runner');
-  const sectionTag = document.querySelector('.register .section-tag');
+  const stepTag = document.getElementById('stepTag');
   let currentStep = 1;
   const totalSteps = steps.length;
 
@@ -415,7 +278,7 @@
     const pct = ((n - 1) / (totalSteps - 1)) * 100;
     trackFill.style.width = pct + '%';
     runner.style.left = pct + '%';
-    sectionTag.textContent = 'Step ' + n + ' of ' + totalSteps;
+    stepTag.textContent = 'Step ' + n + ' of ' + totalSteps;
     currentStep = n;
     if (n === totalSteps) buildReview();
   }
@@ -435,7 +298,6 @@
         return false;
       }
     }
-    // team name required if Team selected
     const participation = document.querySelector('input[name="participation"]:checked');
     if (n === 2 && participation && participation.value === 'Team'){
       const teamName = document.getElementById('teamName');
@@ -458,7 +320,6 @@
     btn.addEventListener('click', () => goToStep(Math.max(currentStep - 1, 1)));
   });
 
-  // Team name toggle
   const pillIndividual = document.getElementById('pillIndividual');
   const pillTeam = document.getElementById('pillTeam');
   const teamNameField = document.getElementById('teamNameField');
@@ -471,7 +332,6 @@
     });
   });
 
-  // Live preview
   const pvName = document.getElementById('pvName');
   const pvInstitution = document.getElementById('pvInstitution');
   const pvIcon = document.getElementById('pvIcon');
@@ -504,7 +364,6 @@
   });
   document.getElementById('sport').addEventListener('change', updatePreview);
 
-  // Bib generation
   function generateBib(){
     const existing = document.getElementById('bibNumber').value;
     if (existing) return existing;
@@ -544,14 +403,12 @@
     });
   }
 
-  // Submit -> register.php (saves to MySQL, then redirects to success.php)
   document.getElementById('regForm').addEventListener('submit', function(e){
     if (!validateStep(currentStep)){
       e.preventDefault();
       return;
     }
-    generateBib(); // fills hidden bibNumber field (server generates the official one)
-    // No preventDefault here — the form submits normally via POST to register.php
+    generateBib();
   });
 
   goToStep(1);
